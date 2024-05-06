@@ -5,22 +5,30 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirection))]
 public class PlayerContoller : MonoBehaviour
 {
  public float walkSpeed = 5f;
  public float runSpeed = 8f;
-
+ public float airWalkSpeed = 3f;
+ public float jumpImpulse = 10f;
+TouchingDirection touchingDirections;
  public float CurrentMoveSpeed { get
  {
-    if(IsMoving){
-        if(IsRunning)
-        {
-            return runSpeed;
-        }else{
-            return walkSpeed;
+        if(IsMoving && !touchingDirections.IsOnWall){
+            if(touchingDirections.IsGrounded){
+            if(IsRunning)
+           {
+              return runSpeed;
+              }else{
+              return walkSpeed;
+            }
         }
-    }
+        else 
+        {
+            return airWalkSpeed;
+        }
+        }
     else{
             return 0;
     }
@@ -67,10 +75,13 @@ public class PlayerContoller : MonoBehaviour
     {
         rb =  GetComponent<Rigidbody2D>();    
         animator = GetComponent<Animator>();
+        touchingDirections = GetComponent<TouchingDirection>();
     }
     private void FixedUpdate() 
     {
         rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
+
+        animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -98,4 +109,10 @@ public class PlayerContoller : MonoBehaviour
             IsRunning = false;
         }
     }
+    public void OnJump(InputAction.CallbackContext  context){
+        if(context.started && touchingDirections.IsGrounded){
+            animator.SetTrigger(AnimationStrings.jump);
+            rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+        }
+}
 }
