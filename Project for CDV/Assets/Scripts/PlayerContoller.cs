@@ -15,23 +15,28 @@ public class PlayerContoller : MonoBehaviour
 TouchingDirection touchingDirections;
  public float CurrentMoveSpeed { get
  {
-        if(IsMoving && !touchingDirections.IsOnWall){
-            if(touchingDirections.IsGrounded){
-            if(IsRunning)
-           {
-              return runSpeed;
-              }else{
-              return walkSpeed;
-            }
-        }
+        if(CanMove)
+        {
+            if(IsMoving && !touchingDirections.IsOnWall){
+                if(touchingDirections.IsGrounded){
+             if(IsRunning)
+                {
+                    return runSpeed;
+                }else{
+                    return walkSpeed;
+                }
+                }
         else 
         {
             return airWalkSpeed;
         }
-        }
-    else{
+                }
+        else{
             return 0;
     }
+        } else{
+            return 0;
+        }
  }
  }
     Vector2 moveInput;
@@ -70,6 +75,11 @@ TouchingDirection touchingDirections;
 
     Rigidbody2D rb;
     Animator animator;
+
+    public bool CanMove {get 
+    {
+        return animator.GetBool(AnimationStrings.canMove);
+    }}
 
     private void Awake() 
     {
@@ -110,9 +120,19 @@ TouchingDirection touchingDirections;
         }
     }
     public void OnJump(InputAction.CallbackContext  context){
-        if(context.started && touchingDirections.IsGrounded){
-            animator.SetTrigger(AnimationStrings.jump);
+        if(context.started && touchingDirections.IsGrounded && CanMove){
+            animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
         }
 }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            animator.SetTrigger(AnimationStrings.attackTrigger);
+        }
+    }
+
+
 }
