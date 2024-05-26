@@ -81,6 +81,13 @@ TouchingDirection touchingDirections;
         return animator.GetBool(AnimationStrings.canMove);
     }}
 
+    public bool IsAlive {
+        get{
+            return animator.GetBool(AnimationStrings.isAlive);
+
+        }
+    }
+
     private void Awake() 
     {
         rb =  GetComponent<Rigidbody2D>();    
@@ -97,10 +104,16 @@ TouchingDirection touchingDirections;
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-        
-        IsMoving = moveInput != Vector2.zero; 
+        if(IsAlive){
+             IsMoving = moveInput != Vector2.zero; 
 
-        SeteFacingDirection(moveInput);
+             SeteFacingDirection(moveInput);
+        } 
+        else
+        {
+            IsMoving = false;
+        }
+    
     }
 
     private void SeteFacingDirection(Vector2 moveInput)

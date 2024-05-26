@@ -113,7 +113,7 @@ TextureImporter:
       name: _Idle_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
         width: 120
         height: 80
