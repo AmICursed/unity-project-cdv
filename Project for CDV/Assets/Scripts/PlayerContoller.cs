@@ -5,13 +5,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirection))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirection), typeof(Damageable))]
 public class PlayerContoller : MonoBehaviour
 {
  public float walkSpeed = 5f;
  public float runSpeed = 8f;
  public float airWalkSpeed = 3f;
  public float jumpImpulse = 10f;
+ Damageable damageable;
 TouchingDirection touchingDirections;
  public float CurrentMoveSpeed { get
  {
@@ -88,15 +89,19 @@ TouchingDirection touchingDirections;
         }
     }
 
+
+
     private void Awake() 
     {
         rb =  GetComponent<Rigidbody2D>();    
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirection>();
+        damageable = GetComponent<Damageable>();
     }
     private void FixedUpdate() 
     {
-        rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
+        if(!damageable.LockVelocity)
+            rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
 
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
     }
@@ -147,5 +152,9 @@ TouchingDirection touchingDirections;
         }
     }
 
+    public void OnHit(int damage, Vector2 knockback)
+    {
+        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+    }
 
 }
