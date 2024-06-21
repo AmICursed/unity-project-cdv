@@ -9,7 +9,8 @@ public class Knight : MonoBehaviour
 {
 
     public float walkStopRate = 0.05f;
-    public float walkSpeed = 3f;
+    public float walkAcceleration = 50f;
+    public float maxSpeed = 3f;
     public DetectionZone cliffDetectionZone;
     public DetectionZone attackZone;
      Rigidbody2D rb;
@@ -48,9 +49,6 @@ public class Knight : MonoBehaviour
         {
             return animator.GetBool(AnimationStrings.canMove);
         }
-
-
-
     }
 
     public bool LockVelocity { get; private set; }
@@ -84,8 +82,10 @@ public class Knight : MonoBehaviour
 
         if(!damageable.LockVelocity)
         {
-        if(CanMove)
-         rb.velocity = new Vector2(walkSpeed * walkDirectionVector.x, rb.velocity.y);
+        if(CanMove && touchingDirections.IsGrounded)
+         rb.velocity = new Vector2(
+            Mathf.Clamp(rb.velocity.x + (walkAcceleration * walkDirectionVector.x * Time.fixedDeltaTime), -maxSpeed, maxSpeed),
+            rb.velocity.y);
         else
             rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, 0, walkStopRate), rb.velocity.y);
         }
