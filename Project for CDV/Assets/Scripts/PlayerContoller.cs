@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirection), typeof(Damageable))]
 public class PlayerContoller : MonoBehaviour
@@ -104,6 +106,11 @@ TouchingDirection touchingDirections;
             rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
 
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
+
+        if(rb.position.y < -15f)
+        {
+             SceneManager.LoadScene("GameplayScene");
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
