@@ -17,7 +17,7 @@ public class End : MonoBehaviour
             if(pickupSource){
                   AudioSource.PlayClipAtPoint(pickupSource.clip, gameObject.transform.position, pickupSource.volume);
                 
-                SceneManager.LoadScene("QuitScene");
+                SceneManager.LoadScene("Final");
                 
             Destroy(gameObject);
             }

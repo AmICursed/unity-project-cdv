@@ -151,8 +151,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.09135437, y: -0.3981191}
-  m_Size: {x: 1.6244202, y: 1.6244202}
+  m_Offset: {x: -0.11231995, y: -0.35013956}
+  m_Size: {x: 1.4433899, y: 1.9984573}
   m_Direction: 0
 --- !u!114 &3034005957837263951
 MonoBehaviour:
@@ -167,6 +167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageableHit:
+    m_PersistentCalls:
+      m_Calls: []
+  healthChanged:
     m_PersistentCalls:
       m_Calls: []
   _maxHealth: 50
@@ -211,6 +214,7 @@ MonoBehaviour:
   biteDetectionZone: {fileID: 1221131364639640449}
   waypoints: []
   waypointReachedDistance: 0.1
+  deathCollider: {fileID: 0}
   _hasTarget: 0
 --- !u!1 &681825679604001885
 GameObject:
@@ -277,8 +281,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.049453735, y: -0.40391707}
-  m_Size: {x: 1.6148987, y: 1.6148987}
+  m_Offset: {x: -0.010879517, y: -0.3918504}
+  m_Size: {x: 1.4942322, y: 1.5907654}
   m_Direction: 0
 --- !u!114 &1676787854431397859
 MonoBehaviour:
@@ -452,6 +456,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.26527405, y: -0.3881567}
-  m_Size: {x: 1.3372498, y: 1.4230212}
+  m_Offset: {x: -0.13856506, y: -0.38815665}
+  m_Size: {x: 1.5906677, y: 1.5906677}
   m_Direction: 0
